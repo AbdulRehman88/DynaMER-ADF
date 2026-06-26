@@ -1,5 +1,7 @@
 ﻿# DynaMER-ADF
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20917825.svg)](https://doi.org/10.5281/zenodo.20917825)
+
 Leakage-safe modality-adaptive temporal fusion for multimodal physiological emotion recognition across SEED-IV, DREAMER, and AMIGOS.
 
 This repository contains the code used for dataset auditing, leakage-safe split construction, temporal feature preparation, baseline training, DynaMER-ADF training, controlled ablations, protocol-extension analysis, and manuscript result-table generation.
