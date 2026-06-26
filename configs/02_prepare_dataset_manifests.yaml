@@ -1,0 +1,67 @@
+﻿manifest:
+  name: "02_prepare_dataset_manifests"
+  output_subdir: "outputs/manifests/02_prepare_dataset_manifests"
+
+  required_previous_audit:
+    summary_json: "outputs/audit/01_dataset_audit/01_dataset_audit_summary.json"
+    require_passed: true
+
+  seed_iv:
+    root_key: "SEED_IV_ROOT"
+    eeg_feature_zip: "eeg_feature_smooth.zip"
+    eye_feature_zip: "eye_feature_smooth.zip"
+    stimulation_file: "SEED-IV_stimulation.xlsx"
+    expected:
+      subjects: 15
+      sessions: 3
+      trials_per_subject_session: 24
+      rows: 1080
+      class_counts:
+        0: 270
+        1: 270
+        2: 270
+        3: 270
+    label_extraction:
+      xlsx_first: true
+      allow_yaml_fallback: true
+      fallback_trial_labels_1_to_24: [1, 2, 3, 0, 2, 0, 0, 1, 0, 1, 2, 1, 1, 1, 2, 3, 2, 2, 3, 3, 0, 3, 0, 3]
+
+  dreamer:
+    root_key: "DREAMER_ROOT"
+    mat_file: "DREAMER.mat"
+    binary_threshold_rule: ">3"
+    expected:
+      subjects: 23
+      trials_per_subject: 18
+      rows: 414
+      label_counts:
+        valence_binary:
+          0: 251
+          1: 163
+        arousal_binary:
+          0: 233
+          1: 181
+        dominance_binary:
+          0: 215
+          1: 199
+
+  amigos:
+    root_key: "AMIGOS_ROOT"
+    trial_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags.npz"
+    feature_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags.npz"
+    trial_metadata_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags_metadata.csv"
+    feature_metadata_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags_metadata.csv"
+    feature_names_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags_feature_names.csv"
+    expected:
+      rows: 240
+      subjects: 15
+      trials_per_subject: 16
+      trial_bag_shape: [240, 149, 256, 17]
+      feature_bag_shape: [240, 149, 140]
+      label_counts:
+        valence_binary:
+          0: 97
+          1: 143
+        arousal_binary:
+          0: 66
+          1: 174

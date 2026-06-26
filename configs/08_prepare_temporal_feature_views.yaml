@@ -1,0 +1,28 @@
+﻿temporal_views:
+  name: "08_prepare_temporal_feature_views"
+  output_subdir: "outputs/temporal_views/08_prepare_temporal_feature_views"
+  save_compressed_npz: true
+
+  required_previous_steps:
+    model_ready_summary_json: "outputs/prepared/04_prepare_model_ready_datasets/04_model_ready_summary.json"
+    architecture_summary_json: "outputs/architecture/07_define_model_architecture/07_architecture_summary.json"
+    require_passed: true
+
+  inputs:
+    unified_model_ready_index: "outputs/prepared/04_prepare_model_ready_datasets/04_unified_model_ready_index.csv"
+
+  seed_iv:
+    use_modalities: ["eeg_de", "eeg_psd", "eye_features"]
+
+  dreamer:
+    use_modalities: ["eeg_stimulus", "ecg_stimulus"]
+    eeg_sampling_rate_hz: 128
+    ecg_sampling_rate_hz: 256
+    window_sec: 2.0
+    hop_sec: 1.0
+    baseline_subtract_channel_mean: true
+    channel_features: ["mean", "std", "rms", "min", "max", "ptp"]
+
+  amigos:
+    use_modalities: ["feature_bag", "eeg_ecg_gsr_window_bag"]
+    primary_view: "feature_bag"

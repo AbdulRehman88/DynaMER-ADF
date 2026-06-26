@@ -1,0 +1,27 @@
+﻿data_modules:
+  name: "06_define_model_data_modules"
+  output_subdir: "outputs/data_modules/06_define_model_data_modules"
+  batch_size: 4
+  num_workers: 0
+  pin_memory: true
+
+  required_previous_steps:
+    loader_summary_json: "outputs/loaders/05_verify_dataset_loaders/05_loader_verification_summary.json"
+    require_passed: true
+
+  inputs:
+    unified_model_ready_index: "outputs/prepared/04_prepare_model_ready_datasets/04_unified_model_ready_index.csv"
+    split_index: "outputs/splits/03_prepare_leakage_safe_splits/03_split_index.csv"
+
+  datasets:
+    SEED-IV:
+      modality_keys: ["eeg_de", "eeg_psd", "eye_features"]
+      primary_modalities: ["eeg_de", "eye_features"]
+
+    DREAMER:
+      modality_keys: ["eeg_stimulus", "ecg_stimulus"]
+      primary_modalities: ["eeg_stimulus", "ecg_stimulus"]
+
+    AMIGOS:
+      modality_keys: ["feature_bag", "eeg_ecg_gsr_window_bag"]
+      primary_modalities: ["feature_bag"]

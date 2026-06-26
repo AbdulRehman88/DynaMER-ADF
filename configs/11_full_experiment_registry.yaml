@@ -1,0 +1,87 @@
+﻿experiment_registry:
+  name: "11_full_experiment_registry"
+  output_subdir: "outputs/experiments/11_full_experiment_registry"
+  random_seed: 42
+
+  required_previous_steps:
+    training_smoke_summary_json: "outputs/training_smoke/10_training_loop_smoke_test/10_training_smoke_summary.json"
+    temporal_data_module_summary_json: "outputs/temporal_data_modules/09_verify_temporal_data_modules/09_temporal_data_module_summary.json"
+    require_passed: true
+
+  inputs:
+    split_index: "outputs/splits/03_prepare_leakage_safe_splits/03_split_index.csv"
+    temporal_view_index: "outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv"
+
+  model_family:
+    proposed_model_name: "DynaMER_GatedBiGRU_SpikeReadout"
+    hidden_dim: 128
+    temporal_backbone: "bigru"
+    fusion: "gated_attention"
+    head: "spike_readout"
+
+  scientific_roles:
+    subject_loso: "primary_subject_independent"
+    cross_session: "primary_session_transfer"
+    subject_mixed_upper_bound: "diagnostic_upper_bound_only"
+
+  tasks:
+    SEED-IV:
+      seed_iv_label:
+        num_classes: 4
+        label_column: "label_seed_iv"
+        modality_keys: ["eeg_combined", "eye_features"]
+        allowed_protocols: ["subject_loso", "cross_session", "subject_mixed_upper_bound"]
+
+    DREAMER:
+      valence_binary:
+        num_classes: 2
+        label_column: "valence_binary"
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+        allowed_protocols: ["subject_loso", "subject_mixed_upper_bound"]
+      arousal_binary:
+        num_classes: 2
+        label_column: "arousal_binary"
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+        allowed_protocols: ["subject_loso", "subject_mixed_upper_bound"]
+      dominance_binary:
+        num_classes: 2
+        label_column: "dominance_binary"
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+        allowed_protocols: ["subject_loso", "subject_mixed_upper_bound"]
+
+    AMIGOS:
+      valence_binary:
+        num_classes: 2
+        label_column: "valence_binary"
+        modality_keys: ["feature_bag"]
+        allowed_protocols: ["subject_loso", "subject_mixed_upper_bound"]
+      arousal_binary:
+        num_classes: 2
+        label_column: "arousal_binary"
+        modality_keys: ["feature_bag"]
+        allowed_protocols: ["subject_loso", "subject_mixed_upper_bound"]
+
+  phases:
+    phase_1_seed_iv_core:
+      priority: 1
+      datasets: ["SEED-IV"]
+      protocols: ["subject_loso", "cross_session"]
+      purpose: "Main high-quality evidence for dynamic EEG-eye emotion recognition."
+
+    phase_2_dreamer_validation:
+      priority: 2
+      datasets: ["DREAMER"]
+      protocols: ["subject_loso"]
+      purpose: "Secondary EEG-ECG physiological validation."
+
+    phase_3_amigos_robustness:
+      priority: 3
+      datasets: ["AMIGOS"]
+      protocols: ["subject_loso"]
+      purpose: "Hard robustness evaluation under imbalance and subject shift."
+
+    phase_4_diagnostic_upper_bound:
+      priority: 4
+      datasets: ["SEED-IV", "DREAMER", "AMIGOS"]
+      protocols: ["subject_mixed_upper_bound"]
+      purpose: "Diagnostic upper bound only; never used as primary generalization claim."

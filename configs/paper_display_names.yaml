@@ -1,0 +1,105 @@
+project_name: DynaMER
+final_model_display: DynaMER-ADF
+
+datasets:
+  SEED-IV: SEED-IV
+  DREAMER: DREAMER
+  AMIGOS: AMIGOS
+
+tasks:
+  seed_iv_label: 4-Class Emotion
+  arousal_binary: Arousal
+  dominance_binary: Dominance
+  valence_binary: Valence
+
+protocols:
+  cross_session: Cross-Session
+  subject_loso: Subject-LOSO
+  subject_mixed_upper_bound: Subject-Mixed Upper Bound
+
+models:
+  dynamer_v1: DynaMER-Base
+  dynamer_v2: DynaMER-BiTCN
+  dynamer_v2b: DynaMER-BiTCN-R
+  dynamer_v3: DynaMER-ADF
+  dynamer_v4: DynaMER-ADF-LS
+  dynamer_v5: DynaMER-Anchor
+
+baselines:
+  temporal_mlp: Temporal MLP
+  lstm: LSTM
+  gru: GRU
+  bilstm: BiLSTM
+  tcn: TCN
+  cnn_lstm: CNN-LSTM
+
+ablations:
+  v3_eeg_combined_only: EEG-only
+  v3_eye_only: Eye-only
+  v3_de_only: EEG-DE only
+  v3_psd_only: EEG-PSD only
+  v3_de_eye: EEG-DE + Eye
+  v3_psd_eye: EEG-PSD + Eye
+  v3_path_v1_only: Base path only
+  v3_path_v2_only: BiTCN path only
+  v3_path_fixed_mean: Fixed dual-path mean
+  v3_fusion_mean: Mean fusion
+  v3_no_spike: No spike head
+  v3_low_spike: Low spike head
+  v3_high_spike: High spike head
+  v3_moddrop_0p10: Modality dropout
+  v3_tcn_depth_1: TCN depth 1
+  v3_tcn_depth_3: TCN depth 3
+  v3_dropout_0p10: Dropout 0.10
+  v3_dropout_0p30: Dropout 0.30
+
+short_labels:
+  SEED-IV: SEED-IV
+  DREAMER: DREAMER
+  AMIGOS: AMIGOS
+  4-Class Emotion: 4-Class\nEmotion
+  Arousal: Arousal
+  Dominance: Dominance
+  Valence: Valence
+  Cross-Session: Cross-\nSession
+  Subject-LOSO: Subject-\nLOSO
+  Subject-Mixed Upper Bound: Subject-Mixed\nUpper Bound
+
+  DynaMER-Base: DynaMER-\nBase
+  DynaMER-BiTCN: DynaMER-\nBiTCN
+  DynaMER-BiTCN-R: DynaMER-\nBiTCN-R
+  DynaMER-ADF: DynaMER-\nADF
+  DynaMER-ADF-LS: DynaMER-\nADF-LS
+  DynaMER-Anchor: DynaMER-\nAnchor
+
+  Temporal MLP: Temporal\nMLP
+  CNN-LSTM: CNN-\nLSTM
+  BiLSTM: BiLSTM
+  LSTM: LSTM
+  GRU: GRU
+  TCN: TCN
+
+  EEG-only: EEG-\nonly
+  Eye-only: Eye-\nonly
+  EEG-DE only: EEG-DE\nonly
+  EEG-PSD only: EEG-PSD\nonly
+  EEG-DE + Eye: EEG-DE\n+ Eye
+  EEG-PSD + Eye: EEG-PSD\n+ Eye
+  Base path only: Base path\nonly
+  BiTCN path only: BiTCN path\nonly
+  Fixed dual-path mean: Fixed dual-path\nmean
+  Mean fusion: Mean\nfusion
+  No spike head: No spike\nhead
+  Low spike head: Low spike\nhead
+  High spike head: High spike\nhead
+  Modality dropout: Modality\ndropout
+  TCN depth 1: TCN\ndepth 1
+  TCN depth 3: TCN\ndepth 3
+  Dropout 0.10: Dropout\n0.10
+  Dropout 0.30: Dropout\n0.30
+
+metric_display:
+  ba: Balanced Accuracy
+  macro_f1: Macro-F1
+  roc_auc: ROC-AUC
+  pr_auc: PR-AUC

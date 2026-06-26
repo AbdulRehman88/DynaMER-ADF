@@ -1,0 +1,67 @@
+﻿# Environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# IDE/system
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local/private config
+configs/local_paths.yaml
+
+# Raw data and generated artifacts
+data/
+outputs/
+checkpoints/
+runs/
+logs/
+
+# Large arrays/checkpoints
+*.npz
+*.npy
+*.pt
+*.pth
+*.pkl
+*.joblib
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.7z
+
+# DynaMER-ADF release exclusions
+data/
+datasets/
+raw/
+processed/
+features/
+checkpoints/
+trained_models/
+outputs/
+results_cache/
+*.npy
+*.npz
+*.mat
+*.pt
+*.pth
+*.pkl
+*.joblib
+*.zip
+*.rar
+*.7z
+*.log
+.env
+__pycache__/
+.ipynb_checkpoints/
+
+scripts_archive/

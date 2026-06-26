@@ -1,0 +1,27 @@
+﻿cff-version: 1.2.0
+title: "DynaMER-ADF: Leakage-Safe Modality-Adaptive Temporal Fusion for Multimodal Physiological Emotion Recognition"
+message: "If you use this software, please cite the associated manuscript and this repository."
+type: software
+authors:
+  - family-names: "Rehman"
+    given-names: "Abdul"
+    orcid: "https://orcid.org/0000-0002-9343-7652"
+  - family-names: "Mun"
+    given-names: "Sungchul"
+    orcid: "https://orcid.org/0000-0003-4596-9889"
+version: "0.1.0"
+date-released: "2026-06-26"
+repository-code: "https://github.com/AbdulRehman88/DynaMER-ADF"
+license: MIT
+keywords:
+  - physiological emotion recognition
+  - multimodal learning
+  - leakage-safe evaluation
+  - EEG
+  - eye tracking
+  - ECG
+  - GSR
+  - SEED-IV
+  - DREAMER
+  - AMIGOS
+  - temporal fusion

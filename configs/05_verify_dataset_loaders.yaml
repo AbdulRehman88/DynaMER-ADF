@@ -1,0 +1,46 @@
+﻿loader_verify:
+  name: "05_verify_dataset_loaders"
+  output_subdir: "outputs/loaders/05_verify_dataset_loaders"
+
+  required_previous_steps:
+    model_ready_summary_json: "outputs/prepared/04_prepare_model_ready_datasets/04_model_ready_summary.json"
+    split_summary_json: "outputs/splits/03_prepare_leakage_safe_splits/03_split_summary.json"
+    require_passed: true
+
+  inputs:
+    unified_model_ready_index: "outputs/prepared/04_prepare_model_ready_datasets/04_unified_model_ready_index.csv"
+    all_split_assignments: "outputs/splits/03_prepare_leakage_safe_splits/03_all_split_assignments.csv"
+    split_index: "outputs/splits/03_prepare_leakage_safe_splits/03_split_index.csv"
+
+  expected:
+    total_prepared_trials: 1734
+    total_datasets: ["AMIGOS", "DREAMER", "SEED-IV"]
+
+  dataset_requirements:
+    SEED-IV:
+      required_npz_keys: ["eeg_de", "eeg_psd", "eye_features", "label_seed_iv"]
+      task_label_map:
+        seed_iv_label: "label_seed_iv"
+      shape_columns:
+        eeg_de: "eeg_de_shape"
+        eeg_psd: "eeg_psd_shape"
+        eye_features: "eye_features_shape"
+
+    DREAMER:
+      required_npz_keys: ["eeg_stimulus", "ecg_stimulus", "valence_binary", "arousal_binary", "dominance_binary"]
+      task_label_map:
+        valence_binary: "valence_binary"
+        arousal_binary: "arousal_binary"
+        dominance_binary: "dominance_binary"
+      shape_columns:
+        eeg_stimulus: "dreamer_eeg_stimulus_shape"
+        ecg_stimulus: "dreamer_ecg_stimulus_shape"
+
+    AMIGOS:
+      required_npz_keys: ["eeg_ecg_gsr_window_bag", "feature_bag", "valence_binary", "arousal_binary"]
+      task_label_map:
+        valence_binary: "valence_binary"
+        arousal_binary: "arousal_binary"
+      shape_columns:
+        eeg_ecg_gsr_window_bag: "amigos_trial_bag_shape"
+        feature_bag: "amigos_feature_bag_shape"

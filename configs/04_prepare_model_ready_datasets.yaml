@@ -1,0 +1,40 @@
+﻿prepare:
+  name: "04_prepare_model_ready_datasets"
+  output_subdir: "outputs/prepared/04_prepare_model_ready_datasets"
+  save_compressed_npz: true
+
+  required_previous_steps:
+    manifest_summary_json: "outputs/manifests/02_prepare_dataset_manifests/02_manifest_summary.json"
+    split_summary_json: "outputs/splits/03_prepare_leakage_safe_splits/03_split_summary.json"
+    require_passed: true
+
+  manifests:
+    seed_iv: "outputs/manifests/02_prepare_dataset_manifests/02_seed_iv_trial_manifest.csv"
+    dreamer: "outputs/manifests/02_prepare_dataset_manifests/02_dreamer_trial_manifest.csv"
+    amigos: "outputs/manifests/02_prepare_dataset_manifests/02_amigos_trial_manifest.csv"
+
+  seed_iv:
+    root_key: "SEED_IV_ROOT"
+    eeg_feature_zip: "eeg_feature_smooth.zip"
+    eye_feature_zip: "eye_feature_smooth.zip"
+    expected:
+      rows: 1080
+      modalities: ["eeg_de", "eeg_psd", "eye_features"]
+
+  dreamer:
+    root_key: "DREAMER_ROOT"
+    mat_file: "DREAMER.mat"
+    expected:
+      rows: 414
+      modalities: ["eeg_stimulus", "ecg_stimulus"]
+
+  amigos:
+    root_key: "AMIGOS_ROOT"
+    trial_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags.npz"
+    feature_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags.npz"
+    feature_names_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags_feature_names.csv"
+    expected:
+      rows: 240
+      trial_bag_shape: [240, 149, 256, 17]
+      feature_bag_shape: [240, 149, 140]
+      modalities: ["eeg_ecg_gsr_window_bag", "feature_bag"]

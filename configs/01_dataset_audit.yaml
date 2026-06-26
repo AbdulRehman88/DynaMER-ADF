@@ -1,0 +1,67 @@
+﻿audit:
+  name: "01_dataset_audit"
+  output_subdir: "outputs/audit/01_dataset_audit"
+
+  seed_iv:
+    root_key: "SEED_IV_ROOT"
+    expected:
+      subjects: 15
+      sessions: 3
+      trials_per_subject_session: 24
+      total_trials: 1080
+      feature_mat_files: 45
+      trials_per_feature_mat: 24
+    files:
+      eeg_feature_zip: "eeg_feature_smooth.zip"
+      eye_feature_zip: "eye_feature_smooth.zip"
+      eeg_raw_zip: "eeg_raw_data.zip"
+      eye_raw_zip: "eye_raw_data.zip"
+      stimulation_file: "SEED-IV_stimulation.xlsx"
+      channel_order_file: "Channel Order.xlsx"
+      montage_file: "channel_62_pos.locs"
+
+  dreamer:
+    root_key: "DREAMER_ROOT"
+    expected:
+      subjects: 23
+      trials_per_subject: 18
+      total_trials: 414
+      eeg_channels: 14
+      ecg_channels: 2
+      eeg_sampling_rate_hz: 128
+      ecg_sampling_rate_hz: 256
+      label_counts:
+        valence:
+          low: 251
+          high: 163
+        arousal:
+          low: 233
+          high: 181
+        dominance:
+          low: 215
+          high: 199
+    files:
+      mat_file: "DREAMER.mat"
+      documentation_file: "DREAMER.pdf"
+
+  amigos:
+    root_key: "AMIGOS_ROOT"
+    expected:
+      trials: 240
+      subjects: 15
+      trials_per_subject: 16
+      trial_bag_shape: [240, 149, 256, 17]
+      feature_bag_shape: [240, 149, 140]
+      valence_counts:
+        low: 97
+        high: 143
+      arousal_counts:
+        low: 66
+        high: 174
+    files:
+      trial_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags.npz"
+      feature_bag_file: "data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags.npz"
+      trial_metadata_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags_metadata.csv"
+      feature_metadata_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags_metadata.csv"
+      feature_names_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags_feature_names.csv"
+      window_metadata_file: "outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_windows_metadata.csv"

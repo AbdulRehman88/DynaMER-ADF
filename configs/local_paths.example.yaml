@@ -1,0 +1,8 @@
+﻿# Copy this file to configs/local_paths.yaml and edit it on your own machine.
+# Do not commit configs/local_paths.yaml because it contains local/private dataset paths.
+
+PROJECT_ROOT: /path/to/DynaMER_Release
+
+SEED_IV_ROOT: /path/to/SEED_IV
+DREAMER_ROOT: /path/to/DREAMER
+AMIGOS_ROOT: /path/to/AMIGOS

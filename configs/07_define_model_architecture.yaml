@@ -1,0 +1,53 @@
+﻿architecture:
+  name: "07_define_model_architecture"
+  output_subdir: "outputs/architecture/07_define_model_architecture"
+
+  required_previous_steps:
+    data_module_summary_json: "outputs/data_modules/06_define_model_data_modules/06_data_module_summary.json"
+    require_passed: true
+
+  inputs:
+    unified_model_ready_index: "outputs/prepared/04_prepare_model_ready_datasets/04_unified_model_ready_index.csv"
+    split_index: "outputs/splits/03_prepare_leakage_safe_splits/03_split_index.csv"
+
+  smoke_test:
+    batch_size: 4
+    num_workers: 0
+    max_split_files: null
+    test_splits: ["train", "val", "test"]
+
+  model:
+    hidden_dim: 128
+    dropout: 0.20
+    temporal_backbone: "bigru"
+    fusion: "gated_attention"
+    head: "spike_readout"
+    spike_steps: 8
+    spike_decay: 0.85
+    spike_threshold: 1.0
+    spike_slope: 10.0
+
+  tasks:
+    SEED-IV:
+      seed_iv_label:
+        num_classes: 4
+        modality_keys: ["eeg_de", "eye_features"]
+
+    DREAMER:
+      valence_binary:
+        num_classes: 2
+        modality_keys: ["eeg_stimulus", "ecg_stimulus"]
+      arousal_binary:
+        num_classes: 2
+        modality_keys: ["eeg_stimulus", "ecg_stimulus"]
+      dominance_binary:
+        num_classes: 2
+        modality_keys: ["eeg_stimulus", "ecg_stimulus"]
+
+    AMIGOS:
+      valence_binary:
+        num_classes: 2
+        modality_keys: ["feature_bag"]
+      arousal_binary:
+        num_classes: 2
+        modality_keys: ["feature_bag"]

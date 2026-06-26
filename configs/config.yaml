@@ -1,0 +1,139 @@
+project:
+  name: DynaMER
+  description: Dynamic Neuromorphic Adaptive Multimodal Emotion Recognition
+  root_dir: ${PROJECT_ROOT}
+  seed: 42
+  deterministic: true
+  device: auto
+
+paths:
+  output_dir: ${PROJECT_ROOT}/outputs
+  cache_dir: ${PROJECT_ROOT}/data/cache
+  processed_dir: ${PROJECT_ROOT}/data/processed
+  log_dir: ${PROJECT_ROOT}/outputs/logs
+  table_dir: ${PROJECT_ROOT}/outputs/tables
+  figure_dir: ${PROJECT_ROOT}/outputs/figures
+  checkpoint_dir: ${PROJECT_ROOT}/outputs/checkpoints
+
+datasets:
+  seed_iv:
+    enabled: true
+    role: primary
+    root: ${SEED_IV_ROOT}
+    eeg_feature_zip: eeg_feature_smooth.zip
+    eye_feature_zip: eye_feature_smooth.zip
+    eeg_raw_zip: eeg_raw_data.zip
+    eye_raw_zip: eye_raw_data.zip
+    stimulation_file: SEED-IV_stimulation.xlsx
+    channel_order_file: Channel Order.xlsx
+    montage_file: channel_62_pos.locs
+    subjects: 15
+    sessions: 3
+    trials_per_session: 24
+    classes: 4
+    modalities: [eeg, eye]
+    primary_task: emotion_4class
+
+  dreamer:
+    enabled: true
+    role: secondary_validation
+    root: ${DREAMER_ROOT}
+    mat_file: DREAMER.mat
+    documentation_file: DREAMER.pdf
+    subjects: 23
+    trials_per_subject: 18
+    modalities: [eeg, ecg]
+    tasks: [valence_binary, arousal_binary, dominance_binary]
+    label_threshold: 3
+
+  amigos:
+    enabled: true
+    role: hard_robustness
+    root: ${AMIGOS_ROOT}
+    dataset_name: amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags
+    trial_bag_file: data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags.npz
+    feature_bag_file: data/windows/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_feature_bags.npz
+    trial_metadata_file: outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_trial_bags_metadata.csv
+    window_metadata_file: outputs/tables/amigos_short_primary_eeg_ecg_gsr_2p0s_ov1p0s_bc_subtractmean_windows_metadata.csv
+    subjects: 15
+    trials: 240
+    modalities: [eeg, ecg, gsr]
+    tasks: [valence_binary, arousal_binary]
+
+experiments:
+  default_dataset: seed_iv
+  default_task: emotion_4class
+  default_protocol: subject_independent
+  protocols:
+    seed_iv:
+      - subject_mixed_upper_bound
+      - subject_independent
+      - cross_session
+      - loso
+    dreamer:
+      - subject_mixed_upper_bound
+      - grouped_subject_cv
+      - loso
+    amigos:
+      - subject_mixed_upper_bound
+      - grouped_subject_cv
+      - loso
+
+modalities:
+  canonical:
+    eeg:
+      enabled: true
+    eye:
+      enabled: true
+    ecg:
+      enabled: true
+    gsr:
+      enabled: true
+
+model:
+  name: modality_adaptive_temporal_snn
+  temporal_input: sequence
+  backbone: tcn
+  fusion: gated_attention
+  head: spike_readout
+  hidden_dim: 128
+  dropout: 0.25
+  num_layers: 2
+  spike:
+    enabled: true
+    surrogate: sigmoid
+    threshold: 1.0
+    steps: 4
+
+training:
+  epochs: 80
+  batch_size: 16
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  patience: 15
+  num_workers: 0
+  class_weighting: balanced
+  gradient_clip_norm: 1.0
+
+evaluation:
+  metrics_multiclass:
+    - accuracy
+    - balanced_accuracy
+    - macro_f1
+    - weighted_f1
+  metrics_binary:
+    - accuracy
+    - balanced_accuracy
+    - macro_f1
+    - roc_auc
+    - pr_auc
+  save_confusion_matrix: true
+  save_roc_curves: true
+
+ablation_plan:
+  modality_ablation: true
+  temporal_vs_mean_pool: true
+  concat_vs_gated_fusion: true
+  spike_vs_non_spike_head: true
+  latency_and_params: true
+  dataset_alignment_optional: false

@@ -1,0 +1,24 @@
+
+source_dir: outputs/full_training/12_controlled_full_training
+output_dir: outputs/result_summaries/13_paper_grade_results
+
+phase_files:
+  phase_1_seed_iv:
+    label: SEED-IV primary evaluation
+    claim_type: primary
+    best_epoch_file: phase_1_seed_iv_best_epoch_metrics.csv
+
+  phase_2_dreamer:
+    label: DREAMER secondary validation
+    claim_type: primary
+    best_epoch_file: phase_2_dreamer_best_epoch_metrics.csv
+
+  phase_3_amigos:
+    label: AMIGOS robustness evaluation
+    claim_type: primary
+    best_epoch_file: phase_3_amigos_best_epoch_metrics.csv
+
+  phase_4_diagnostic:
+    label: Subject-mixed diagnostic upper bound
+    claim_type: diagnostic
+    best_epoch_file: phase_4_diagnostic_best_epoch_metrics.csv

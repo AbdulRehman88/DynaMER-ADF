@@ -1,0 +1,45 @@
+﻿splits:
+  name: "03_prepare_leakage_safe_splits"
+  output_subdir: "outputs/splits/03_prepare_leakage_safe_splits"
+  random_seed: 42
+
+  required_manifest:
+    summary_json: "outputs/manifests/02_prepare_dataset_manifests/02_manifest_summary.json"
+    require_passed: true
+
+  manifest_paths:
+    seed_iv: "outputs/manifests/02_prepare_dataset_manifests/02_seed_iv_trial_manifest.csv"
+    dreamer: "outputs/manifests/02_prepare_dataset_manifests/02_dreamer_trial_manifest.csv"
+    amigos: "outputs/manifests/02_prepare_dataset_manifests/02_amigos_trial_manifest.csv"
+    unified: "outputs/manifests/02_prepare_dataset_manifests/02_unified_trial_manifest.csv"
+
+  split_policy:
+    train_fraction_mixed: 0.70
+    val_fraction_mixed: 0.15
+    test_fraction_mixed: 0.15
+    val_subject_fraction_loso: 0.15
+    min_val_subjects_loso: 1
+    strict_no_test_subject_overlap_for_loso: true
+    allow_subject_overlap_for_cross_session: true
+    allow_subject_mixed_upper_bound: true
+
+  datasets:
+    seed_iv:
+      label_columns: ["seed_iv_label"]
+      primary_label_column: "seed_iv_label"
+      protocols:
+        - "subject_loso"
+        - "cross_session"
+        - "subject_mixed_upper_bound"
+
+    dreamer:
+      label_columns: ["valence_binary", "arousal_binary", "dominance_binary"]
+      protocols:
+        - "subject_loso"
+        - "subject_mixed_upper_bound"
+
+    amigos:
+      label_columns: ["valence_binary", "arousal_binary"]
+      protocols:
+        - "subject_loso"
+        - "subject_mixed_upper_bound"

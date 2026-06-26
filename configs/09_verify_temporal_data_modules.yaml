@@ -1,0 +1,48 @@
+﻿temporal_data_modules:
+  name: "09_verify_temporal_data_modules"
+  output_subdir: "outputs/temporal_data_modules/09_verify_temporal_data_modules"
+
+  required_previous_steps:
+    temporal_view_summary_json: "outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_summary.json"
+    split_summary_json: "outputs/splits/03_prepare_leakage_safe_splits/03_split_summary.json"
+    require_passed: true
+
+  inputs:
+    temporal_view_index: "outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv"
+    split_index: "outputs/splits/03_prepare_leakage_safe_splits/03_split_index.csv"
+
+  loader:
+    batch_size: 8
+    num_workers: 0
+    pin_memory: true
+
+  tasks:
+    SEED-IV:
+      seed_iv_label:
+        label_column: "label_seed_iv"
+        num_classes: 4
+        modality_keys: ["eeg_combined", "eye_features"]
+
+    DREAMER:
+      valence_binary:
+        label_column: "valence_binary"
+        num_classes: 2
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+      arousal_binary:
+        label_column: "arousal_binary"
+        num_classes: 2
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+      dominance_binary:
+        label_column: "dominance_binary"
+        num_classes: 2
+        modality_keys: ["eeg_temporal_features", "ecg_temporal_features"]
+
+    AMIGOS:
+      valence_binary:
+        label_column: "valence_binary"
+        num_classes: 2
+        modality_keys: ["feature_bag"]
+      arousal_binary:
+        label_column: "arousal_binary"
+        num_classes: 2
+        modality_keys: ["feature_bag"]

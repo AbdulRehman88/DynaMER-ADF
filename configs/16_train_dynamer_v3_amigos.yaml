@@ -1,0 +1,51 @@
+baseline_training:
+  name: 16_train_dynamer_v3_amigos
+  random_seed: 42
+  output_subdir: outputs/dynamer_v3/16_dynamer_v3_amigos_robustness
+  required_previous_steps:
+    require_passed: true
+    registry_summary_json: outputs/experiments/11_full_experiment_registry/11_experiment_registry_summary.json
+    temporal_data_module_summary_json: outputs/temporal_data_modules/09_verify_temporal_data_modules/09_temporal_data_module_summary.json
+  inputs:
+    experiment_registry: outputs/experiments/11_full_experiment_registry/11_full_experiment_registry.csv
+    temporal_view_index: outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv
+  baselines:
+  - dynamer_v3
+  execution:
+    phase_filter: phase_3_amigos_robustness
+    include_diagnostic_upper_bound: false
+    max_runs: null
+    overwrite_existing: false
+    use_cuda_if_available: true
+    save_best_checkpoint: true
+    save_last_checkpoint: true
+    save_predictions: true
+  normalization:
+    fit_train_split_zscore: true
+    eps: 1.0e-06
+  loader:
+    batch_size: 16
+    num_workers: 0
+    pin_memory: true
+  model:
+    hidden_dim: 128
+    dropout: 0.2
+    temporal_backbone_v1: bigru
+    tcn_layers: 2
+    modality_dropout: 0.0
+    spike_steps: 6
+    spike_decay: 0.85
+    spike_threshold: 1.0
+    spike_slope: 5.0
+    spike_mix: 0.1
+  training:
+    epochs: 50
+    patience: 10
+    min_delta: 0.0001
+    monitor_metric: val_macro_f1
+    monitor_mode: max
+    learning_rate: 0.0005
+    weight_decay: 0.0002
+    gradient_clip_norm: 1.0
+    use_amp: true
+    class_weighting: balanced_train
