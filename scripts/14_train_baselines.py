@@ -1,4 +1,4 @@
-
+﻿
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,7 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from dynamer.data.temporal_data_modules import DynaMERTemporalSplitDataModule
-from dynamer.models.baseline_models import BaselineEmotionModel
+from dynamer.models.temporal_baseline_models import BaselineEmotionModel
 from dynamer.training.full_engine import (
     EarlyStopper,
     count_parameters,

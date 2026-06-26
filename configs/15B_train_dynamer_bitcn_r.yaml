@@ -1,5 +1,5 @@
-baseline_training:
-  name: 15_train_dynamer_v2b
+﻿baseline_training:
+  name: 15B_train_dynamer_bitcn_r
   random_seed: 42
   output_subdir: outputs/dynamer_v2b/15_dynamer_v2b_training
   required_previous_steps:

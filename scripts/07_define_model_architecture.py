@@ -17,7 +17,7 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from dynamer.data.data_modules import DynaMERSplitDataModule
-from dynamer.models.dynamer_model import DynaMERModel
+from dynamer.models.dynamer_base_model import DynaMERBaseModel
 
 
 def now() -> str:
@@ -167,7 +167,7 @@ def main() -> int:
             )
             dm.setup()
 
-            model = DynaMERModel(
+            model = DynaMERBaseModel(
                 modality_keys=modality_keys,
                 num_classes=num_classes,
                 hidden_dim=int(model_cfg["hidden_dim"]),

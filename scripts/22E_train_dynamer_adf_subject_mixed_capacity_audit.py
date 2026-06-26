@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import hashlib
@@ -20,7 +20,7 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from src.dynamer.data.temporal_data_modules import DynaMERTemporalSplitDataModule
-from src.dynamer.models.dynamer_v3_ablation_model import DynaMERv3AblationModel
+from src.dynamer.models.dynamer_adf_ablation_model import DynaMERADFAblationModel
 from src.dynamer.training.full_engine import (
     EarlyStopper,
     count_parameters,
@@ -154,7 +154,7 @@ def make_model(run: Dict[str, Any], capacity_variant: str, device: torch.device)
     modality_keys = str(run["modality_keys"]).split("|")
     num_classes = int(run["num_classes"])
 
-    return DynaMERv3AblationModel(
+    return DynaMERADFAblationModel(
         modality_keys=modality_keys,
         num_classes=num_classes,
         hidden_dim=int(cfg["hidden_dim"]),

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import json
@@ -17,7 +17,7 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from dynamer.data.temporal_data_modules import DynaMERTemporalSplitDataModule
-from dynamer.models.dynamer_model import DynaMERModel
+from dynamer.models.dynamer_base_model import DynaMERBaseModel
 from dynamer.training.smoke_engine import (
     count_parameters,
     evaluate_smoke,
@@ -117,8 +117,8 @@ def select_representative_runs(split_index: pd.DataFrame, cfg: Dict[str, Any]) -
     return selected
 
 
-def make_model(task_cfg: Dict[str, Any], model_cfg: Dict[str, Any], device: torch.device) -> DynaMERModel:
-    return DynaMERModel(
+def make_model(task_cfg: Dict[str, Any], model_cfg: Dict[str, Any], device: torch.device) -> DynaMERBaseModel:
+    return DynaMERBaseModel(
         modality_keys=list(task_cfg["modality_keys"]),
         num_classes=int(task_cfg["num_classes"]),
         hidden_dim=int(model_cfg["hidden_dim"]),

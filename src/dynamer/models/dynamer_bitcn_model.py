@@ -1,4 +1,4 @@
-
+﻿
 from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
@@ -270,7 +270,7 @@ class HybridLinearSpikeHead(nn.Module):
         return (1.0 - self.spike_mix) * linear_logits + self.spike_mix * spike_logits
 
 
-class DynaMERv2Model(nn.Module):
+class DynaMERBiTCNModel(nn.Module):
     """
     DynaMER-v2:
       1. BiLSTM-TCN modality-specific temporal encoders
@@ -347,3 +347,7 @@ class DynaMERv2Model(nn.Module):
             "gate_weights": gate_weights,
             "active_modalities": active_keys,
         }
+
+
+# Backward-compatible alias
+DynaMERv2Model = DynaMERBiTCNModel

@@ -1,4 +1,4 @@
-
+﻿
 from __future__ import annotations
 
 import inspect
@@ -7,8 +7,8 @@ from typing import Any, Dict, List
 import torch
 from torch import nn
 
-from src.dynamer.models.dynamer_model import DynaMERModel
-from src.dynamer.models.dynamer_v3_model import DynaMERv3Model
+from src.dynamer.models.dynamer_base_model import DynaMERBaseModel
+from src.dynamer.models.dynamer_adf_model import DynaMERADFModel
 
 
 def _make_supported_instance(cls, kwargs: Dict[str, Any]):
@@ -28,7 +28,7 @@ def _extract_logits(out):
     return out
 
 
-class DynaMERv5Model(nn.Module):
+class DynaMERAnchorModel(nn.Module):
     """
     DynaMER-v5: v1-anchored residual DynaMER.
 
@@ -81,9 +81,9 @@ class DynaMERv5Model(nn.Module):
             "spike_slope": spike_slope,
         }
 
-        self.anchor = _make_supported_instance(DynaMERModel, anchor_kwargs)
+        self.anchor = _make_supported_instance(DynaMERBaseModel, anchor_kwargs)
 
-        self.residual = DynaMERv3Model(
+        self.residual = DynaMERADFModel(
             modality_keys=self.modality_keys,
             num_classes=self.num_classes,
             hidden_dim=hidden_dim,
@@ -136,3 +136,8 @@ class DynaMERv5Model(nn.Module):
                     out[f"residual_{k}"] = v
 
         return out
+
+
+
+# Backward-compatible alias
+DynaMERv5Model = DynaMERAnchorModel

@@ -26,11 +26,11 @@ This file maps the original numbered pipeline scripts to their public manuscript
 | Script | Public role | Decision |
 |---|---|---|
 | 14_train_baselines.py | Baseline model training | Keep |
-| 15_train_dynamer_v2.py | DynaMER-BiTCN training | Keep |
-| 16_train_dynamer_v3.py | DynaMER-ADF training | Keep |
-| 17_train_dynamer_v4.py | DynaMER-ADF-LS training | Keep |
-| 18_train_dynamer_v5.py | DynaMER-Anchor training | Keep |
-| 19B_train_dynamer_v3_ablation.py | Architecture/component ablation | Keep |
+| 15_train_dynamer_bitcn.py | DynaMER-BiTCN training | Keep |
+| 16_train_dynamer_adf.py | DynaMER-ADF training | Keep |
+| 17_train_dynamer_adf_ls.py | DynaMER-ADF-LS training | Keep |
+| 18_train_dynamer_anchor.py | DynaMER-Anchor training | Keep |
+| 19B_train_dynamer_adf_ablation.py | Architecture/component ablation | Keep |
 | 19C_compile_paper_tables_figdata.py | Paper table and figure-data compilation | Keep |
 
 ## Protocol extensions and audits

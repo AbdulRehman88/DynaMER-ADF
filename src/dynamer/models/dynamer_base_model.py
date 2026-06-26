@@ -10,7 +10,7 @@ from src.dynamer.models.heads import LinearClassificationHead, SpikeReadoutHead
 from src.dynamer.models.modality_encoders import TemporalModalityEncoder
 
 
-class DynaMERModel(nn.Module):
+class DynaMERBaseModel(nn.Module):
     """
     Dynamic Neuromorphic Adaptive Multimodal Emotion Recognition model.
 
@@ -98,3 +98,7 @@ class DynaMERModel(nn.Module):
             "gate_weights": gate_weights,
             "active_modalities": active_keys,
         }
+
+
+# Backward-compatible alias
+DynaMERModel = DynaMERBaseModel

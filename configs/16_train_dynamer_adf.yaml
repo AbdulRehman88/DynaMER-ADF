@@ -1,7 +1,7 @@
-baseline_training:
-  name: 16_train_dynamer_v3_amigos
+﻿baseline_training:
+  name: 16_train_dynamer_adf
   random_seed: 42
-  output_subdir: outputs/dynamer_v3/16_dynamer_v3_amigos_robustness
+  output_subdir: outputs/dynamer_v3/16_dynamer_v3_training
   required_previous_steps:
     require_passed: true
     registry_summary_json: outputs/experiments/11_full_experiment_registry/11_experiment_registry_summary.json
@@ -12,7 +12,7 @@ baseline_training:
   baselines:
   - dynamer_v3
   execution:
-    phase_filter: phase_3_amigos_robustness
+    phase_filter: phase_1_seed_iv_core
     include_diagnostic_upper_bound: false
     max_runs: null
     overwrite_existing: false

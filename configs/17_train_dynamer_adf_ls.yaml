@@ -1,7 +1,7 @@
-baseline_training:
-  name: 16_train_dynamer_v3_dreamer
+﻿baseline_training:
+  name: 17_train_dynamer_adf_ls
   random_seed: 42
-  output_subdir: outputs/dynamer_v3/16_dynamer_v3_dreamer_validation
+  output_subdir: outputs/dynamer_v4/17_dynamer_v4_training
   required_previous_steps:
     require_passed: true
     registry_summary_json: outputs/experiments/11_full_experiment_registry/11_experiment_registry_summary.json
@@ -10,9 +10,9 @@ baseline_training:
     experiment_registry: outputs/experiments/11_full_experiment_registry/11_full_experiment_registry.csv
     temporal_view_index: outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv
   baselines:
-  - dynamer_v3
+  - dynamer_v4
   execution:
-    phase_filter: phase_2_dreamer_validation
+    phase_filter: phase_1_seed_iv_core
     include_diagnostic_upper_bound: false
     max_runs: null
     overwrite_existing: false
@@ -37,7 +37,7 @@ baseline_training:
     spike_decay: 0.85
     spike_threshold: 1.0
     spike_slope: 5.0
-    spike_mix: 0.1
+    spike_mix: 0.0
   training:
     epochs: 50
     patience: 10
@@ -49,3 +49,4 @@ baseline_training:
     gradient_clip_norm: 1.0
     use_amp: true
     class_weighting: balanced_train
+    label_smoothing: 0.05

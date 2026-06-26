@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import hashlib
@@ -21,10 +21,10 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from src.dynamer.data.temporal_data_modules import DynaMERTemporalSplitDataModule
-from src.dynamer.models.baseline_models import BaselineEmotionModel
-from src.dynamer.models.dynamer_v2_model import DynaMERv2Model
-from src.dynamer.models.dynamer_v3_model import DynaMERv3Model
-from src.dynamer.models.dynamer_v5_model import DynaMERv5Model
+from src.dynamer.models.temporal_baseline_models import BaselineEmotionModel
+from src.dynamer.models.dynamer_bitcn_model import DynaMERBiTCNModel
+from src.dynamer.models.dynamer_adf_model import DynaMERADFModel
+from src.dynamer.models.dynamer_anchor_model import DynaMERAnchorModel
 from src.dynamer.training.full_engine import (
     EarlyStopper,
     count_parameters,
@@ -186,7 +186,7 @@ def make_model(run: Dict[str, Any], variant: str, device: torch.device) -> torch
 
     if variant == "dynamer_v2":
         cfg = DEFAULT_MODEL_CONFIGS[variant]
-        return DynaMERv2Model(
+        return DynaMERBiTCNModel(
             modality_keys=modality_keys,
             num_classes=num_classes,
             hidden_dim=int(cfg["hidden_dim"]),
@@ -202,7 +202,7 @@ def make_model(run: Dict[str, Any], variant: str, device: torch.device) -> torch
 
     if variant == "dynamer_v3":
         cfg = DEFAULT_MODEL_CONFIGS[variant]
-        return DynaMERv3Model(
+        return DynaMERADFModel(
             modality_keys=modality_keys,
             num_classes=num_classes,
             hidden_dim=int(cfg["hidden_dim"]),
@@ -219,7 +219,7 @@ def make_model(run: Dict[str, Any], variant: str, device: torch.device) -> torch
 
     if variant == "dynamer_v5":
         cfg = DEFAULT_MODEL_CONFIGS[variant]
-        return DynaMERv5Model(
+        return DynaMERAnchorModel(
             modality_keys=modality_keys,
             num_classes=num_classes,
             hidden_dim=int(cfg["hidden_dim"]),

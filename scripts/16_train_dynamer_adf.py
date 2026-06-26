@@ -1,4 +1,4 @@
-
+﻿
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,7 @@ if str(PROJECT_ROOT_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT_FOR_IMPORT))
 
 from dynamer.data.temporal_data_modules import DynaMERTemporalSplitDataModule
-from dynamer.models.dynamer_v3_model import DynaMERv3Model
+from dynamer.models.dynamer_adf_model import DynaMERADFModel
 from dynamer.training.full_engine import (
     EarlyStopper,
     count_parameters,
@@ -108,8 +108,8 @@ def select_registry_runs(
     return selected
 
 
-def make_model(run: Dict[str, Any], baseline_variant: str, model_cfg: Dict[str, Any], device: torch.device) -> DynaMERv3Model:
-    return DynaMERv3Model(
+def make_model(run: Dict[str, Any], baseline_variant: str, model_cfg: Dict[str, Any], device: torch.device) -> DynaMERADFModel:
+    return DynaMERADFModel(
         modality_keys=str(run["modality_keys"]).split("|"),
         num_classes=int(run["num_classes"]),
         hidden_dim=int(model_cfg["hidden_dim"]),
@@ -405,10 +405,10 @@ def run_single_training(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="16_train_dynamer_v3: DynaMER-v3 training using Stage 12 data/splits/engine.")
+    parser = argparse.ArgumentParser(description="16_train_dynamer_adf: DynaMER-v3 training using Stage 12 data/splits/engine.")
     parser.add_argument("--config", required=True)
     parser.add_argument("--local-paths", required=True)
-    parser.add_argument("--baseline-config", default="configs/16_train_dynamer_v3.yaml")
+    parser.add_argument("--baseline-config", default="configs/16_train_dynamer_adf.yaml")
     parser.add_argument("--phase", default=None, help="Override phase_filter. Use all for all registry rows.")
     parser.add_argument("--baseline", default="all", help="Baseline variant name or all.")
     parser.add_argument("--max-runs", type=int, default=None, help="Optional max registry rows before expanding baselines.")
@@ -424,8 +424,8 @@ def main() -> int:
     out_dir = project_root / cfg["output_subdir"]
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    logger = Logger(out_dir / "16_train_dynamer_v3_log.txt")
-    logger.info("Starting 16_train_dynamer_v3.")
+    logger = Logger(out_dir / "16_train_dynamer_adf_log.txt")
+    logger.info("Starting 16_train_dynamer_adf.")
     logger.info(f"Project root: {project_root}")
     logger.info(f"Output directory: {out_dir}")
 
@@ -596,7 +596,7 @@ def main() -> int:
             "epoch_metrics": str(epoch_report_path),
             "checks": str(checks_path),
             "summary": str(summary_path),
-            "log": str(out_dir / "16_train_dynamer_v3_log.txt"),
+            "log": str(out_dir / "16_train_dynamer_adf_log.txt"),
             "runs_dir": str(out_dir / "runs"),
         },
         "failed_checks": failed_checks.to_dict(orient="records"),
@@ -619,7 +619,7 @@ def main() -> int:
     print(f"4. {epoch_report_path}")
     print(f"5. {checks_path}")
     print(f"6. {summary_path}")
-    print(f"7. {out_dir / '16_train_dynamer_v3_log.txt'}")
+    print(f"7. {out_dir / '16_train_dynamer_adf_log.txt'}")
     print(f"8. {out_dir / 'runs'}")
 
     if not overall_passed:

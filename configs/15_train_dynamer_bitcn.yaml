@@ -1,7 +1,7 @@
-baseline_training:
-  name: 19B_train_dynamer_v3_ablation
+﻿baseline_training:
+  name: 15_train_dynamer_bitcn
   random_seed: 42
-  output_subdir: outputs/ablations/19B_dynamer_v3_component_ablation_training
+  output_subdir: outputs/dynamer_v2/15_dynamer_v2_training
   required_previous_steps:
     require_passed: true
     registry_summary_json: outputs/experiments/11_full_experiment_registry/11_experiment_registry_summary.json
@@ -10,24 +10,7 @@ baseline_training:
     experiment_registry: outputs/experiments/11_full_experiment_registry/11_full_experiment_registry.csv
     temporal_view_index: outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv
   baselines:
-  - v3_eeg_combined_only
-  - v3_eye_only
-  - v3_de_only
-  - v3_psd_only
-  - v3_de_eye
-  - v3_psd_eye
-  - v3_path_v1_only
-  - v3_path_v2_only
-  - v3_path_fixed_mean
-  - v3_fusion_mean
-  - v3_no_spike
-  - v3_low_spike
-  - v3_high_spike
-  - v3_moddrop_0p10
-  - v3_tcn_depth_1
-  - v3_tcn_depth_3
-  - v3_dropout_0p10
-  - v3_dropout_0p30
+  - dynamer_v2
   execution:
     phase_filter: phase_1_seed_iv_core
     include_diagnostic_upper_bound: false
@@ -35,7 +18,7 @@ baseline_training:
     overwrite_existing: false
     use_cuda_if_available: true
     save_best_checkpoint: true
-    save_last_checkpoint: false
+    save_last_checkpoint: true
     save_predictions: true
   normalization:
     fit_train_split_zscore: true
@@ -46,17 +29,14 @@ baseline_training:
     pin_memory: true
   model:
     hidden_dim: 128
-    dropout: 0.2
-    temporal_backbone_v1: bigru
+    dropout: 0.25
     tcn_layers: 2
-    modality_dropout: 0.0
+    modality_dropout: 0.1
     spike_steps: 6
     spike_decay: 0.85
     spike_threshold: 1.0
     spike_slope: 5.0
-    spike_mix: 0.1
-    path_mode: learned_dual
-    fusion_mode: gated
+    spike_mix: 0.15
   training:
     epochs: 50
     patience: 10
@@ -64,7 +44,7 @@ baseline_training:
     monitor_metric: val_macro_f1
     monitor_mode: max
     learning_rate: 0.0005
-    weight_decay: 0.0002
+    weight_decay: 0.0001
     gradient_clip_norm: 1.0
     use_amp: true
     class_weighting: balanced_train

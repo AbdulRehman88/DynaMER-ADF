@@ -1,7 +1,7 @@
-baseline_training:
-  name: 15_train_dynamer_v2
+﻿baseline_training:
+  name: 16_train_dynamer_adf_amigos
   random_seed: 42
-  output_subdir: outputs/dynamer_v2/15_dynamer_v2_training
+  output_subdir: outputs/dynamer_v3/16_dynamer_v3_amigos_robustness
   required_previous_steps:
     require_passed: true
     registry_summary_json: outputs/experiments/11_full_experiment_registry/11_experiment_registry_summary.json
@@ -10,9 +10,9 @@ baseline_training:
     experiment_registry: outputs/experiments/11_full_experiment_registry/11_full_experiment_registry.csv
     temporal_view_index: outputs/temporal_views/08_prepare_temporal_feature_views/08_temporal_view_index.csv
   baselines:
-  - dynamer_v2
+  - dynamer_v3
   execution:
-    phase_filter: phase_1_seed_iv_core
+    phase_filter: phase_3_amigos_robustness
     include_diagnostic_upper_bound: false
     max_runs: null
     overwrite_existing: false
@@ -29,14 +29,15 @@ baseline_training:
     pin_memory: true
   model:
     hidden_dim: 128
-    dropout: 0.25
+    dropout: 0.2
+    temporal_backbone_v1: bigru
     tcn_layers: 2
-    modality_dropout: 0.1
+    modality_dropout: 0.0
     spike_steps: 6
     spike_decay: 0.85
     spike_threshold: 1.0
     spike_slope: 5.0
-    spike_mix: 0.15
+    spike_mix: 0.1
   training:
     epochs: 50
     patience: 10
@@ -44,7 +45,7 @@ baseline_training:
     monitor_metric: val_macro_f1
     monitor_mode: max
     learning_rate: 0.0005
-    weight_decay: 0.0001
+    weight_decay: 0.0002
     gradient_clip_norm: 1.0
     use_amp: true
     class_weighting: balanced_train
