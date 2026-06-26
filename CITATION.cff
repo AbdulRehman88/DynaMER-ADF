@@ -9,10 +9,10 @@ authors:
   - family-names: "Mun"
     given-names: "Sungchul"
     orcid: "https://orcid.org/0000-0003-4596-9889"
-version: "0.1.0"
+version: "0.1.1"
 date-released: "2026-06-26"
 repository-code: "https://github.com/AbdulRehman88/DynaMER-ADF"
-doi: "10.5281/zenodo.20917825"
+doi: "10.5281/zenodo.20934010"
 license: MIT
 keywords:
   - physiological emotion recognition

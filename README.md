@@ -1,6 +1,6 @@
 ﻿# DynaMER-ADF
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20917825.svg)](https://doi.org/10.5281/zenodo.20917825)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20934010.svg)](https://doi.org/10.5281/zenodo.20934010)
 
 Leakage-safe modality-adaptive temporal fusion for multimodal physiological emotion recognition across SEED-IV, DREAMER, and AMIGOS.
 
